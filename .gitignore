@@ -26,3 +26,8 @@ node_modules
 /public/packs-test
 /node_modules
 .idea/
+
+#Josh added
+.generators
+.rakeTasks
+/public/assets
