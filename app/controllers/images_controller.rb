@@ -14,6 +14,12 @@ class ImagesController < ApplicationController
     end
   end
 
+  def show
+    @image = Image.find(params[:id])
+  rescue StandardError
+    redirect_to action: 'new'
+  end
+
   private
 
   def create_params
