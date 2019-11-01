@@ -43,10 +43,14 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show' do
-    i = Image.create(url: 'https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/P590860')
+    url = 'https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/P590860'
+    tags = 'test, test2'
+    i = Image.create(url: url, tag_list: tags)
     get image_path(i)
 
     assert_response :success
-    assert_select 'img'
+    assert_select '#image_url', "URL: #{url}"
+    assert_select '#image_tags', "Tags: #{tags}"
+    assert_select format('img[src="%<url>s"]', url: url)
   end
 end

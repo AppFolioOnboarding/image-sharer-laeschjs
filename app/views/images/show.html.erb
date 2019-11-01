@@ -1,4 +1,4 @@
-<%= flash[:notice] %>
-URL: <%= @image.url %>
-<br />
+<div id="flash_message"><%= flash[:success] %></div>
+<div id="image_url">URL: <%= @image.url %></div>
+<div id="image_tags">Tags: <%= @image.tag_list %></div>
 <img src=<%= @image.url %> width="300px" />
