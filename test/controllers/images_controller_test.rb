@@ -27,6 +27,19 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
                                     } }
     end
     assert_redirected_to image_path(Image.last)
+    follow_redirect!
+    assert_select '#flash_message', 'Image Saved!'
+  end
+
+  test 'should create with tags' do
+    assert_difference 'Image.count' do
+      post images_path, params: { image:
+                                    {
+                                      url: 'https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/P590860',
+                                      tag_list: 'test'
+                                    } }
+    end
+    assert_redirected_to image_path(Image.last)
   end
 
   test 'should show' do
