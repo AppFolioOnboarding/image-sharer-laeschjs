@@ -6,6 +6,9 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select 'form'
     assert_select 'label', 'Enter the Image URL:'
+    assert_select 'form input[id="image_url"]'
+    assert_select 'label', 'Image Tag:'
+    assert_select 'form input[id="image_tag_list"]'
     assert_select 'form input[type=submit][value="Save Image"]'
   end
 
@@ -24,13 +27,30 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
                                     } }
     end
     assert_redirected_to image_path(Image.last)
+    follow_redirect!
+    assert_select '#flash_message', 'Image Saved!'
+  end
+
+  test 'should create with tags' do
+    assert_difference 'Image.count' do
+      post images_path, params: { image:
+                                    {
+                                      url: 'https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/P590860',
+                                      tag_list: 'test'
+                                    } }
+    end
+    assert_redirected_to image_path(Image.last)
   end
 
   test 'should show' do
-    i = Image.create(url: 'https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/P590860')
+    url = 'https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/P590860'
+    tags = 'test, test2'
+    i = Image.create(url: url, tag_list: tags)
     get image_path(i)
 
     assert_response :success
-    assert_select 'img'
+    assert_select '#image_url', "URL: #{url}"
+    assert_select '#image_tags', "Tags: #{tags}"
+    assert_select format('img[src="%<url>s"]', url: url)
   end
 end

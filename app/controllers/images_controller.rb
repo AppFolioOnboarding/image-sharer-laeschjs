@@ -7,7 +7,7 @@ class ImagesController < ApplicationController
     @image = Image.new(create_params)
 
     if @image.save
-      flash[:notice] = 'success'
+      flash[:success] = 'Image Saved!'
       redirect_to @image
     else
       render :new, status: :bad_request
@@ -23,6 +23,6 @@ class ImagesController < ApplicationController
   private
 
   def create_params
-    params.require(:image).permit(:url)
+    params.require(:image).permit(:url, :tag_list)
   end
 end
