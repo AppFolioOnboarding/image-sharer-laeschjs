@@ -3,5 +3,15 @@ class ApplicationController < ActionController::Base
 
   def home
     @images = Image.all.reverse
+    @filter_is_on = false
+    flash[:notice] = ''
+
+    search = params['search']
+    return unless search.present?
+
+    @tag = search['tag']
+    @images = Image.tagged_with(@tag)
+    flash[:notice] = "There are no images with '#{@tag}' as a tag" if @images.count.zero?
+    @filter_is_on = true
   end
 end

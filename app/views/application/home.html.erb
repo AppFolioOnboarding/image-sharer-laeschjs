@@ -1,8 +1,26 @@
 <a href=<%= new_image_path %>>Upload</a> an Image!
+<br />
 
-<div>
+<!-- Below was first solution. Keeping for reference -->
+<%#= simple_form_for :search, url: root_path, method: "GET", html: { class: 'form-inline' }  do |f| %>
+  <%#= f.input :tag, required: false, label: false, input_html: {value: @tag} %>
+  <%#= f.submit "Filter by Tag", class: "btn btn-primary btn-sm" %>
+<%# end %>
+
+<% if @filter_is_on %>
+  <%= link_to "Clear filter", root_path, class: "btn btn-primary btn-sm" %>
+<% end %>
+<br />
+<h1 id="flash_message"><%= flash[:notice] %></h1>
+
+<div id="images">
   <% @images.each do |image| %>
     <h1>URL: <%= image.url %></h1>
     <img src=<%= image.url %> width="400px" />
+    Tags:
+    <% image.tags.each do |tag| %>
+      <%= link_to tag.name, root_path(search: { tag: tag.name }), class: 'image_tag' %><%
+      unless image.tags.last.name == tag.name %>,<% end %>
+    <% end %>
   <% end %>
 </div>
