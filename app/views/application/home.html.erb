@@ -17,10 +17,6 @@
   <% @images.each do |image| %>
     <h1>URL: <%= image.url %></h1>
     <img src=<%= image.url %> width="400px" />
-    Tags:
-    <% image.tags.each do |tag| %>
-      <%= link_to tag.name, root_path(search: { tag: tag.name }), class: 'image_tag' %><%
-      unless image.tags.last.name == tag.name %>,<% end %>
-    <% end %>
+    <%= @application_view_model.make_tags_for_one_image(image).html_safe %>
   <% end %>
 </div>

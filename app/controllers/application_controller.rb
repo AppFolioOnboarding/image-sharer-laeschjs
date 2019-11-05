@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     @images = Image.all.reverse
     @filter_is_on = false
     flash[:notice] = ''
+    @application_view_model = ApplicationView.new
 
     search = params['search']
     return unless search.present?
