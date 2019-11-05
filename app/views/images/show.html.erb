@@ -1,8 +1,4 @@
 <div id="flash_message"><%= flash[:success] %></div>
 <div id="image_url">URL: <%= @image.url %></div>
-Tags:
-<% @image.tags.each do |tag| %>
-  <%= link_to tag.name, root_path(search: { tag: tag.name }), class: 'image_tag' %><%
-  unless @image.tags.last.name == tag.name %>,<% end %>
-<% end %>
 <img src=<%= @image.url %> width="300px" />
+<%= @tags_view_model.make_tags_for_one_image(@image).html_safe %>
