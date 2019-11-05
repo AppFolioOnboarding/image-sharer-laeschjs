@@ -50,7 +50,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select '#image_url', "URL: #{url}"
-    assert_select '#image_tags', "Tags: #{tags}"
+    assert_select '.image_tag', text: 'test', count: 1
+    assert_select '.image_tag', text: 'test2', count: 1
     assert_select format('img[src="%<url>s"]', url: url)
   end
 end
