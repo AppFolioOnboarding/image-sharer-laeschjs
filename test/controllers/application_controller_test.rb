@@ -73,4 +73,10 @@ class ApplicationControllerTest < ActionDispatch::IntegrationTest
       assert_select format('img[src="%<url>s"]', url: @url1)
     end
   end
+
+  test 'home should allow user to delete an image' do
+    get root_path
+
+    assert_select 'a', 'Delete Image', count: 3
+  end
 end
