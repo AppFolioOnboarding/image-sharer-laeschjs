@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class ImagesControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @url = 'https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/P590860'
+    tags = 'test, test2'
+    @image = Image.create(url: @url, tag_list: tags)
+  end
   test 'should get new' do
     get new_image_path
     assert_response :success
@@ -43,15 +48,28 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show' do
-    url = 'https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/P590860'
-    tags = 'test, test2'
-    i = Image.create(url: url, tag_list: tags)
-    get image_path(i)
+    get image_path(@image)
 
     assert_response :success
-    assert_select '#image_url', "URL: #{url}"
+    assert_select '#image_url', "URL: #{@url}"
     assert_select '.image_tag', text: 'test', count: 1
     assert_select '.image_tag', text: 'test2', count: 1
-    assert_select format('img[src="%<url>s"]', url: url)
+    assert_select format('img[src="%<url>s"]', url: @url)
+  end
+
+  test 'should delete' do
+    delete image_path(@image)
+
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_select '#flash_success_message', 'Image Deleted'
+  end
+
+  test 'should not delete with bad input' do
+    delete image_path(id: 1000)
+
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_select '#flash_error_message', 'Image not found'
   end
 end

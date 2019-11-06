@@ -21,6 +21,15 @@ class ImagesController < ApplicationController
     redirect_to action: 'new'
   end
 
+  def destroy
+    Image.destroy(params[:id])
+    flash[:success] = 'Image Deleted'
+  rescue StandardError
+    flash[:error] = 'Image not found'
+  ensure
+    redirect_to root_path
+  end
+
   private
 
   def create_params

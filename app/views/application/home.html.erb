@@ -1,5 +1,7 @@
 <a href=<%= new_image_path %>>Upload</a> an Image!
 <br />
+<div id="flash_success_message"><%= flash[:success] %></div>
+<div id="flash_error_message"><%= flash[:error] %></div>
 
 <!-- Below was first solution. Keeping for reference -->
 <%#= simple_form_for :search, url: root_path, method: "GET", html: { class: 'form-inline' }  do |f| %>
