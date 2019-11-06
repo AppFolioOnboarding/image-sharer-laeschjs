@@ -2,3 +2,4 @@
 <div id="image_url">URL: <%= @image.url %></div>
 <img src=<%= @image.url %> width="300px" />
 <%= @tags_view_model.make_tags_for_one_image(@image).html_safe %>
+<%= link_to "Delete Image", @image, method: :delete, class: "ml-5 btn btn-danger btn-sm", data: {confirm: "Are you sure you want to permanently delete this image?"}%>
