@@ -16,6 +16,7 @@ class ImagesController < ApplicationController
 
   def show
     @image = Image.find(params[:id])
+    @tags_view_model = ApplicationView.new
   rescue StandardError
     redirect_to action: 'new'
   end
