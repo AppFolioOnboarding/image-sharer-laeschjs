@@ -1,25 +1,2 @@
-<a href=<%= new_image_path %>>Upload</a> an Image!
-<br />
-<div id="flash_success_message"><%= flash[:success] %></div>
-<div id="flash_error_message"><%= flash[:error] %></div>
-
-<!-- Below was first solution. Keeping for reference -->
-<%#= simple_form_for :search, url: root_path, method: "GET", html: { class: 'form-inline' }  do |f| %>
-  <%#= f.input :tag, required: false, label: false, input_html: {value: @tag} %>
-  <%#= f.submit "Filter by Tag", class: "btn btn-primary btn-sm" %>
-<%# end %>
-
-<% if @filter_is_on %>
-  <%= link_to "Clear filter", root_path, class: "btn btn-primary btn-sm" %>
-<% end %>
-<br />
-<h1 id="flash_message"><%= flash[:notice] %></h1>
-
-<div id="images">
-  <% @images.each do |image| %>
-    <h1>URL: <%= image.url %></h1>
-    <img src=<%= image.url %> width="400px" />
-    <%= @application_view_model.make_tags_for_one_image(image).html_safe %>
-    <%= link_to "Delete Image", image, method: :delete, class: "ml-5 btn btn-danger btn-sm", data: {confirm: "Are you sure you want to permanently delete this image?"}%>
-  <% end %>
-</div>
+<%= link_to "Upload an Image", new_image_path, class: "btn btn-primary" %>
+<%= link_to "See all Images", images_path, class: "btn btn-warning" %>
