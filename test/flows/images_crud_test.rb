@@ -7,22 +7,24 @@ class ImagesCrudTest < FlowTestCase
     new_image_page = images_index_page.add_new_image!
 
     tags = %w[foo bar]
+
     new_image_page = new_image_page.create_image!(
       url: 'invalid',
       tags: tags.join(', ')
     ).as_a(PageObjects::Images::NewPage)
-    assert_equal 'must be a valid URL', new_image_page.url.error_message
+    assert_equal 'is not a valid URL', new_image_page.url.error_message
 
     image_url = 'https://media3.giphy.com/media/EldfH1VJdbrwY/200.gif'
     new_image_page.url.set(image_url)
 
     image_show_page = new_image_page.create_image!
-    assert_equal 'You have successfully added an image.', image_show_page.flash_message(:success)
+    assert_equal 'Image Saved!', image_show_page.flash_message(:success)
 
     assert_equal image_url, image_show_page.image_url
     assert_equal tags, image_show_page.tags
 
     images_index_page = image_show_page.go_back_to_index!
+
     assert images_index_page.showing_image?(url: image_url, tags: tags)
   end
 
@@ -45,12 +47,12 @@ class ImagesCrudTest < FlowTestCase
     image_show_page = image_to_delete.view!
 
     image_show_page.delete do |confirm_dialog|
-      assert_equal 'Are you sure?', confirm_dialog.text
+      assert_equal 'Are you sure you want to permanently delete this image?', confirm_dialog.text
       confirm_dialog.dismiss
     end
 
     images_index_page = image_show_page.delete_and_confirm!
-    assert_equal 'You have successfully deleted the image.', images_index_page.flash_message(:success)
+    assert_equal 'Image Deleted', images_index_page.flash_message(:success)
 
     assert_equal 1, images_index_page.images.count
     assert_not images_index_page.showing_image?(url: ugly_cat_url)

@@ -6,11 +6,13 @@ module PageObjects
       end
 
       def tags
-        # TODO
+        node.find('.image_tag').text.split(' ')
       end
 
       def click_tag!(tag_name)
-        # TODO
+        node.click_on(tag_name)
+        stale!
+        window.change_to(IndexPage)
       end
     end
   end
