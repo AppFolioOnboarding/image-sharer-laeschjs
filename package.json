@@ -34,5 +34,8 @@
     "lint": "eslint app/javascript",
     "lint:fix": "eslint app/javascript --fix",
     "test": "mocha --recursive --compilers js:@babel/register --require app/javascript/testHelpers.js --require ignore-styles app/javascript/**/test"
+  },
+  "engines": {
+    "node": "10.16.3"
   }
 }
