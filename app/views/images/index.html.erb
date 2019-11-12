@@ -1,0 +1,23 @@
+<%= link_to "Go Back Home", root_path, class: "btn btn-primary" %>
+<%= link_to "Upload an Image", new_image_path, class: "btn btn-primary" %>
+<div id="flash_success_message"><%= flash[:success] %></div>
+<div id="flash_error_message"><%= flash[:error] %></div>
+
+<% if @filter_is_on %>
+  <%= link_to "Clear filter", images_path, class: "btn btn-primary btn-sm" %>
+<% end %>
+<br />
+<h1 id="flash_message"><%= flash[:notice] %></h1>
+
+<div id="all_images">
+  <% @images.each do |image| %>
+    <div class="image_card">
+      <h3>URL: <%= image.url %></h3>
+      <a class='image_link' href=<%= image_path(image) %>>
+        <img src=<%= image.url %> width="400px" />
+      </a>
+      <%= @application_view_model.make_tags_for_one_image(image).html_safe %>
+      <%= link_to "Delete Image", image, method: :delete, class: "ml-5 btn btn-danger btn-sm", data: {confirm: "Are you sure you want to permanently delete this image?"}%>
+    </div>
+  <% end %>
+</div>
