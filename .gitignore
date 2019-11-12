@@ -22,10 +22,12 @@
 
 # Don't check in node_modules
 node_modules
+/public/packs
 /public/packs-test
 /node_modules
 .idea/
 
-#Josh added
+# Josh added
+/public/assets
 .generators
 .rakeTasks

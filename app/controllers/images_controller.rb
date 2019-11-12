@@ -49,7 +49,7 @@ class ImagesController < ApplicationController
 
   def check_search(params)
     search = params['search']
-    return unless search.present?
+    return if search.blank?
 
     @tag = search['tag']
     @images = Image.tagged_with(@tag)

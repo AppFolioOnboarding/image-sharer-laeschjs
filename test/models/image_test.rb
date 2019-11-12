@@ -8,13 +8,13 @@ class ImageTest < ActiveSupport::TestCase
 
   test 'nil url' do
     i = Image.new(url: nil)
-    refute i.valid?
+    assert_not i.valid?
     assert_not_empty i.errors.messages
   end
 
   test 'not valid url' do
     i = Image.new(url: 'bad url')
-    refute i.valid?
+    assert_not i.valid?
     assert_not_empty i.errors.messages
   end
 
