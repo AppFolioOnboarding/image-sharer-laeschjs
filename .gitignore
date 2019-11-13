@@ -26,6 +26,7 @@ node_modules
 /public/packs-test
 /node_modules
 .idea/
+/public/packs/*
 
 # Josh added
 /public/assets
